@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     # Local Apps
     "posts",
     "accounts",
+    "comments",
+    "likes",
 ]
 
 MIDDLEWARE = [

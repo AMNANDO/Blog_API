@@ -14,7 +14,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
         fields = ('title', 'content', 'status')
 
     def create(self, validated_data):
-        request = self.context.get['request']
+        request = self.context['request']
         validated_data['author'] = request.user
         return Post.objects.create(**validated_data)
 

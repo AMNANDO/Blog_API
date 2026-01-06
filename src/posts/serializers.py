@@ -3,6 +3,8 @@ from .models import Post
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
+    likes_count = serializers.IntegerField(source= 'likes.count', read_only=True)
+
     class Meta:
         model = Post
         fields = '__all__'

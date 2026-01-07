@@ -148,3 +148,52 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'id',
     'USER_ID_CLASS': 'user_id',
 }
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Blog Admin",
+    "site_header": "Blog Administration",
+    "site_brand": "Blog API",
+    "welcome_sign": "Welcome to Blog Admin Panel",
+
+    "search_model":[
+        "auth.User",
+        "posts.User",
+        "comments.User",
+    ],
+
+    "topmenu_links":[
+        {"name":"Home", "url":"/", "permissions":["auth.view_user"]},
+        {"model":"auth.User"},
+    ],
+
+    "show_sidebar": True,
+    "navigation_expanded": True,
+
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "posts.post": "fas fa-newspaper",
+        "posts.comment": "fas fa-comments",
+        "posts.like": "fas fa-heart",
+    },
+
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "darkly",
+    "dark_mode_theme": "cyborg",
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+
+    "navbar": "navbar-dark",
+    "sidebar": "sidebar-dark-primary",
+    "accent": "accent-primary",
+
+    "sidebar_nav_flat_style": True,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_compact_style": False,
+}

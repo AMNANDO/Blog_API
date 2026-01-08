@@ -14,7 +14,11 @@ class CanCreateComments(BasePermission):
     message = 'You can`t create comment!!'
     def has_permission(self, request, view):
         post = view.get_post()
-        return post.is_active and post.status == 'published'
+        return (
+            request.user.is_authenticated and
+            post.is_active and
+            post.status == 'published'
+        )
 
 class CanEditComments(BasePermission):
     message = 'You can`t edit this comment!!'

@@ -20,7 +20,7 @@ class CanCreateComments(BasePermission):
             post.status == 'published'
         )
 
-class CanEditComments(BasePermission):
+class CanEditComment(BasePermission):
     message = 'You can`t edit this comment!!'
     def has_object_permission(self, request, view, obj):
         return obj.author == request.user

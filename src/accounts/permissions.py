@@ -25,14 +25,6 @@ class IsNormalUser(BasePermission):
             request.user.is_authenticated and
             request.user.role == 'user'
         )
-class CanCreatePost(BasePermission):
-    message = 'You can`t create post!!'
-    def has_permission(self, request, view):
-        return bool(
-            request.user and
-            request.user.is_authenticated and
-            request.user.role in ['admin', 'author']
-        )
 
 class CanModerateContent(BasePermission):
     message = 'You can`t moderate content!!'

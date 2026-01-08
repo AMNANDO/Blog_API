@@ -18,7 +18,7 @@ class IsActive(BasePermission):
         return obj.is_active
 
 class CanCreatePost(BasePermission):
-    def has_object_permission(self, request, view, obj):
+    def has_permission(self, request, view):
         return request.user.role in ('admin', 'author')
 
 class CanEditPost(BasePermission):

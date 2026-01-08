@@ -21,3 +21,9 @@ class CanCreatePost(BasePermission):
     def has_object_permission(self, request, view, obj):
         return request.user.role in ('admin', 'author')
 
+class CanEditPost(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return (
+            obj.author == request.user or
+            request.user.role == 'admin'
+        )

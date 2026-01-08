@@ -5,7 +5,7 @@ from django.conf import settings
 
 class Like(models.Model):
     post = models.ForeignKey(
-        'posts.Post',
+        'apps.posts.Post',
         on_delete=models.CASCADE,
         related_name='likes'
     )

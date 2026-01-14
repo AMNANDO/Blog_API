@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 
 class Comment(models.Model):
     post = models.ForeignKey(
-        'apps.posts.Post',   # چون Post در اپ دیگر است
+        'posts.Post',   # چون Post در اپ دیگر است
         on_delete=models.CASCADE,
         related_name='comments'
     )

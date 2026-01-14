@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "rest_framework",
 
     # Local Apps
-    "posts",
+    "apps.posts",
     "accounts",
     "comments",
     "likes",

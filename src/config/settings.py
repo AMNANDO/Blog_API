@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     # Local Apps
     "apps.posts",
     "apps.accounts",
-    "comments",
+    "apps.comments",
     "likes",
 ]
 

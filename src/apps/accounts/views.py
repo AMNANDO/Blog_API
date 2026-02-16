@@ -1,12 +1,16 @@
 from django.shortcuts import render
+from django.contrib.auth import get_user_model
 from rest_framework.generics import (CreateAPIView,
                                      RetrieveAPIView,
-                                     UpdateAPIView)
+                                     UpdateAPIView,
+                                     ListAPIView)
 from rest_framework.permissions import (AllowAny,
                                         IsAuthenticated)
 from .serializers import (RegisterUserSerializer,
                           UserDetailSerializer,
-                          UpdateUserSerializer)
+                          UpdateUserSerializer,
+                          UserAdminSerializer)
+from .permissions import (IsAdmin)
 
 # Create your views here.
 
@@ -27,3 +31,8 @@ class UpdateMeView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+class UserListView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserAdminSerializer
+    permission_classes = [IsAdmin]

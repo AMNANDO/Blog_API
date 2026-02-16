@@ -78,3 +78,19 @@ class ChangeUserRoleView(APIView):
             {"id": user.id, "role": user.role},
             status=status.HTTP_200_OK
         )
+class ToggleUserActiveView(APIView):
+    permission_classes = [IsAdmin]
+
+    def patch(self, request, pk):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        user.is_active = not user.is_active
+        user.save()
+
+        return Response(
+            {"id": user.id, "is_active": user.is_active},
+            status=status.HTTP_200_OK
+        )

@@ -10,7 +10,8 @@ from .serializers import (RegisterUserSerializer,
                           UserDetailSerializer,
                           UpdateUserSerializer,
                           UserAdminSerializer)
-from .permissions import (IsAdmin)
+from .permissions import (IsAdmin,
+                          IsSelf)
 
 # Create your views here.
 
@@ -36,3 +37,13 @@ class UserListView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserAdminSerializer
     permission_classes = [IsAdmin]
+
+class UserDetailView(RetrieveAPIView):
+    queryset = User.objects.get()
+    serializer_class = UserDetailSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.user.role == User.ROLE_ADMIN:
+            return [IsAdmin()]
+        return [IsSelf()]

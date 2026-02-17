@@ -56,3 +56,19 @@ class PostViewSet(ModelViewSet):
             status='published',
             is_active=True
         )
+
+    def get_permissions(self):
+
+        if self.action == 'create':
+            return [IsAuthenticated(), CanCreatePost()]
+
+        if self.action in ['update', 'partial_update']:
+            return (IsAuthenticated(), CanEditPost())
+
+        if self.action == 'destroy':
+            return [IsAuthenticated(), IsPostAuthorOrAdmin()]
+
+        if self.action == 'publish':
+            return [IsAuthenticated(), IsPostAuthorOrAdmin()]
+
+        return [AllowAny()]

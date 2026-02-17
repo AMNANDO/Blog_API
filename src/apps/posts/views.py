@@ -81,3 +81,21 @@ class PostViewSet(ModelViewSet):
              {"detail": "Post deactivated successfully"},
              status=status.HTTP_204_NO_CONTENT
          )
+
+    @action(detail=True, methods=['patch'])
+    def publish(self, request, pk=None):
+        post = self.get_object()
+
+        if post.status == Post.STATUS_PUBLISHED:
+            return Response(
+                {"detail": "Post already published"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        post.status = Post.STATUS_PUBLISHED
+        post.save()
+
+        return Response(
+            {"detail": "Post published successfully"},
+            status=status.HTTP_200_OK
+        )

@@ -72,3 +72,12 @@ class PostViewSet(ModelViewSet):
             return [IsAuthenticated(), IsPostAuthorOrAdmin()]
 
         return [AllowAny()]
+
+    def destroy(self, request, *args, **kwargs):
+         post = self.get_object()
+         post.is_active = False
+         post.save()
+         return Response(
+             {"detail": "Post deactivated successfully"},
+             status=status.HTTP_204_NO_CONTENT
+         )

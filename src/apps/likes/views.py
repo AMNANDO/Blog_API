@@ -71,3 +71,21 @@ class PostLikeView(APIView):
         if self.request.method == "DELETE":
             return [IsAuthenticated()]
         return [AllowAny()]
+
+class PostLikesListView(APIView):
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, post_id):
+        post = get_object_or_404(Post, pk=post_id)
+
+        if not post.is_active or post.status != 'published':
+            return Response(
+                {"detail" : "post not available"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        likes = post.likes.all()
+        serializer = LikeSerializer(likes, many=True)
+
+        return Response(serializer.data)

@@ -64,3 +64,10 @@ class PostLikeView(APIView):
             {"detail": "like removed successfully"},
             status=status.HTTP_204_NO_CONTENT
         )
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            return [IsAuthenticated(), CanLikePost()]
+        if self.request.method == "DELETE":
+            return [IsAuthenticated()]
+        return [AllowAny()]

@@ -16,3 +16,32 @@ class PostLikeView(APIView):
 
     def get_post(self):
         return get_object_or_404(Post, pk=self.kwargs['post_id'])
+
+    def post(self, request, post_id):
+
+        post = self.get_post()
+
+        if not post.is_active or post.status != 'published':
+            return Response(
+                {"detail": "cannot like this post"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if Like.objects.filter(post=post, user=request.user).exists():
+            return Response(
+                {"detail": "You already liked this post"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        serializer = LikeSerializer(
+            data={},
+            context={'request': request, 'post': post}
+        )
+
+        serializer.is_valid(raise_exception=True)
+        like = serializer.save()
+
+        return Response(
+            LikeSerializer(like).data,
+            status=status.HTTP_201_CREATED
+        )

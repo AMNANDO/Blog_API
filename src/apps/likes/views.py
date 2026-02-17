@@ -45,3 +45,22 @@ class PostLikeView(APIView):
             LikeSerializer(like).data,
             status=status.HTTP_201_CREATED
         )
+
+    def delete(self, request, post_id):
+
+        post = self.get_post()
+
+        try:
+            like = Like.objects.get(post=post, user=request.user)
+        except Like.DoesNotExist:
+            return Response(
+                {"detail": "You have not liked this post"},
+                status=status.HTTP_400_FORBIDDEN
+            )
+
+        like.delete()
+
+        return Response(
+            {"detail": "like removed successfully"},
+            status=status.HTTP_204_NO_CONTENT
+        )

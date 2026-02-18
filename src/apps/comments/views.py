@@ -78,3 +78,13 @@ class CommentDetailView(RetrieveUpdateDestroyAPIView):
 
         return super().get_permissions()
 
+    def destroy(self, request, *args, **kwargs):
+
+        comment = self.get_object()
+        comment.is_active = False
+        comment.save()
+
+        return Response(
+            {"detail": "Comment deactivated successfully."},
+            status=status.HTTP_204_NO_CONTENT
+        )

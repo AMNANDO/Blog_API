@@ -59,3 +59,8 @@ class PostCommentView(APIView):
             return [IsAuthenticated(), CanCreateComments()]
 
         return [AllowAny()]
+
+class CommentDetailView(RetrieveUpdateDestroyAPIView):
+
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer

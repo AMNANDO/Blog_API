@@ -21,3 +21,18 @@ class PostCommentView(APIView):
 
     def get_post(self):
         return get_object_or_404(Post, pk=self.kwargs['post_id'])
+
+    def get(self, request, post_id):
+
+        post = self.get_post()
+
+        if not post.is_active or post.status != 'published':
+            return Response(
+                {"detail": "Post not available"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        comments = post.comments.filter(is_active=True)
+        serializer = CommentSerializer(comments, many=True)
+
+        return Response(serializer.data)

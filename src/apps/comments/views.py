@@ -53,3 +53,9 @@ class PostCommentView(APIView):
             CommentSerializer(comment).data,
             status=status.HTTP_201_CREATED
                         )
+    def get_permissions(self):
+
+        if self.request.method == 'POST':
+            return [IsAuthenticated(), CanCreateComments()]
+
+        return [AllowAny()]

@@ -64,3 +64,17 @@ class CommentDetailView(RetrieveUpdateDestroyAPIView):
 
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+
+    def get_permissions(self):
+
+        if self.request.method == 'GET':
+            return [IsCommentActive()]
+
+        if self.request.method in ['PATCH', 'PUT']:
+            return [IsAuthenticated(), CanEditComment()]
+
+        if self.request.method == 'DELETE':
+            return [IsAuthenticated(), IsCommentOwner()]
+
+        return super().get_permissions()
+

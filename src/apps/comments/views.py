@@ -36,3 +36,20 @@ class PostCommentView(APIView):
         serializer = CommentSerializer(comments, many=True)
 
         return Response(serializer.data)
+
+    def post(self, request, post_id):
+
+        post = self.get_post()
+
+        serializer = CommentCreateSerializer(
+            data=request.data,
+            context={'request': request, 'post': post}
+        )
+
+        serializer.is_valid(raise_exception=True)
+        comment = serializer.save()
+
+        return Response(
+            CommentSerializer(comment).data,
+            status=status.HTTP_201_CREATED
+                        )

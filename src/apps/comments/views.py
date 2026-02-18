@@ -14,4 +14,10 @@ from .permissions import (CanCreateComments,
                           CanEditComment,
                           IsCommentActive,
                           IsCommentOwner)
+
 # Create your views here.
+
+class PostCommentView(APIView):
+
+    def get_post(self):
+        return get_object_or_404(Post, pk=self.kwargs['post_id'])
